@@ -27,7 +27,7 @@ const PORT = 12345;
         const content = await page.$("body");
 
         const rect = await page.evaluate(() => {
-          const element = document.getElementById('area');
+          const element = document.getElementById('dac-area');
           const { x, y, width, height } = element.getBoundingClientRect();
 
           return { x, y, width, height };

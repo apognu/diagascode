@@ -10,7 +10,7 @@ export type Appearance = {
   class?: string,
   background?: string,
   borderColor?: string,
-  borderSize?: string,
+  borderSize?: number,
 }
 
 export type Connection = {

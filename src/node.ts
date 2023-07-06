@@ -1,5 +1,6 @@
 import { BrowserJsPlumbInstance, AnchorSpec, EndpointSpec, EndpointStyle, OverlaySpec, newInstance } from '@jsplumb/browser-ui';
 
+import { Canvas } from './canvas';
 import { Position, Appearance } from './types';
 import { Peer, PeerOptions } from './peer';
 
@@ -16,6 +17,8 @@ export class Node {
     if (!area) {
       area = document.createElement("div");
       area.setAttribute("id", "dac-area");
+      area.style.backgroundColor = Canvas.backgroundColor;
+      area.style.padding = `${Canvas.padding}px`;
 
       document.body.prepend(area);
 
@@ -64,7 +67,7 @@ export class Node {
       template.style.borderColor = appearance.borderColor;
     }
     if (appearance?.borderSize) {
-      template.style.borderWidth = appearance.borderSize;
+      template.style.borderWidth = `${appearance.borderSize}px`;
     }
 
     for (const key in data) {

@@ -22,7 +22,20 @@ You are free to add other elements as well, such as fonts and stylesheets to the
 
 The Javascript file included in the HTML should import the library and, after page load, instantiate all the components needed to be drawn. The next section will explain how to do that.
 
-To run the example, move there and run `npm exec diagascode-generate` to generate an image, or `npm exec vite` to launch a Web server serving the diagram.
+To run the example, move there and run `npm exec diagascode` to generate an image, or `npm exec vite` to launch a Web server serving the diagram.
+
+## Canvas
+
+General options about the canvas can be configured before any node:
+
+```typescript
+import { Canvas } from '@apognu/diagascode/src/lib';
+
+window.onload = () => {
+  Canvas.backgroundColor = "black";
+  Canvas.padding = 32;
+}
+```
 
 ## Node definition
 
@@ -120,7 +133,7 @@ The last argument to `Node` is used to customize the appearance of the component
 
 ```typescript
 {
-  template?: string, // The ID of the template to use, defaults to `template`.
+  template?: string, // The ID of the template to use, defaults to `dac-default-template`.
   class?: string, // Add a class to the resulting component to be styled with CSS
   background?: string, // Override the component background color.
   borderColor?: string, // Override the component border color.
