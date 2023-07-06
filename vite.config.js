@@ -1,9 +1,9 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from "vite";
 
 export default defineConfig({
   build: {
-    src: './src',
-    outDir: './dist',
+    src: "./src",
+    outDir: "./dist",
   },
   plugins: [],
 });

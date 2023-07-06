@@ -1,18 +1,30 @@
-import { BrowserJsPlumbInstance, AnchorSpec, EndpointSpec, EndpointStyle, OverlaySpec, newInstance } from '@jsplumb/browser-ui';
+import {
+  BrowserJsPlumbInstance,
+  AnchorSpec,
+  EndpointSpec,
+  EndpointStyle,
+  OverlaySpec,
+  newInstance,
+} from "@jsplumb/browser-ui";
 
-import { Canvas } from './canvas';
-import { Position, Appearance } from './types';
-import { Peer, PeerOptions } from './peer';
+import { Canvas } from "./canvas";
+import { Position, Appearance } from "./types";
+import { Peer, PeerOptions } from "./peer";
 
-var instance: BrowserJsPlumbInstance | undefined = undefined;
+let instance: BrowserJsPlumbInstance | undefined;
 
 export class Node {
   id: string;
   col: number;
   row: number;
 
-  constructor(position: Position, data: { [id: string]: string } = {}, peers: Array<Node | [Node, PeerOptions]> = [], appearance?: Appearance) {
-    var area = document.getElementById('dac-area')
+  constructor(
+    position: Position,
+    data: { [id: string]: string } = {},
+    peers: (Node | [Node, PeerOptions])[] = [],
+    appearance?: Appearance,
+  ) {
+    let area = document.getElementById("dac-area");
 
     if (!area) {
       area = document.createElement("div");
@@ -37,8 +49,10 @@ export class Node {
       return;
     }
 
-    const templateId = appearance?.template || 'dac-default-template';
-    const template = document.getElementById(templateId)?.cloneNode(true) as HTMLElement;
+    const templateId = appearance?.template || "dac-default-template";
+    const template = document
+      .getElementById(templateId)
+      ?.cloneNode(true) as HTMLElement;
 
     if (template === undefined) {
       return;
@@ -70,8 +84,8 @@ export class Node {
       template.style.borderWidth = `${appearance.borderSize}px`;
     }
 
-    for (const key in data) {
-      const el = template.querySelector(`.${key}`)
+    for (const key of Object.keys(data)) {
+      const el = template.querySelector(`.${key}`);
 
       if (el) {
         if (el.tagName === "IMG") {
@@ -87,65 +101,75 @@ export class Node {
     const node = document.getElementById(this.id)!;
 
     for (const spec of peers) {
-      var peer: Peer | undefined = undefined;
+      let peer: Peer | undefined;
 
       if (spec instanceof Node) {
         peer = new Peer(spec);
       } else if (Array.isArray(spec)) {
-        const [node, options] = spec;
+        const [peerNode, options] = spec;
 
-        peer = new Peer(node, options)
+        peer = new Peer(peerNode, options);
       }
 
       if (peer === undefined) {
         continue;
       }
 
-      var paintStyle = { stroke: "black", strokeWidth: 1, dashstyle: "0" };
-      var endpointStyles: [EndpointStyle, EndpointStyle] = [{ fill: "black" }, { fill: "black" }];
-      var endpoint: EndpointSpec = { type: "Blank", options: {} };
-      var anchor: AnchorSpec = "AutoDefault";
-      var overlays: OverlaySpec[] = [];
+      const paintStyle = { stroke: "black", strokeWidth: 1, dashstyle: "0" };
+      const endpointStyles: [EndpointStyle, EndpointStyle] = [
+        { fill: "black" },
+        { fill: "black" },
+      ];
+      const overlays: OverlaySpec[] = [];
+
+      let endpoint: EndpointSpec = { type: "Blank", options: {} };
+      let anchor: AnchorSpec = "AutoDefault";
 
       if (peer.connection?.dashed) {
-        paintStyle["dashstyle"] = "1 4";
+        paintStyle.dashstyle = "1 4";
       }
       if (peer.connection?.color) {
-        paintStyle["stroke"] = peer.connection.color;
+        paintStyle.stroke = peer.connection.color;
       }
       if (peer.connection?.size) {
-        paintStyle["strokeWidth"] = peer.connection.size;
+        paintStyle.strokeWidth = peer.connection.size;
       }
       if (peer.connection?.label) {
-        overlays.push({ type: "Label", options: { label: peer.connection.label } });
+        overlays.push({
+          type: "Label",
+          options: { label: peer.connection.label },
+        });
       }
 
       if (peer.handles?.arrow === undefined || !peer.handles.arrow) {
         endpoint = { type: "Dot", options: { radius: 4 } };
 
         if (peer.handles?.sourceColor) {
-          endpointStyles[0]["fill"] = peer.handles.sourceColor;
+          endpointStyles[0].fill = peer.handles.sourceColor;
         }
         if (peer.handles?.destColor) {
-          endpointStyles[1]["fill"] = peer.handles.destColor;
+          endpointStyles[1].fill = peer.handles.destColor;
         }
         if (peer.handles?.size) {
           endpoint.options.radius = peer.handles.size;
         }
       } else if (peer.handles.arrow) {
-        var location = 0;
-        var direction = -1;
+        let location = 0;
+        let direction = -1;
 
         if (peer.handles.direction === "from") {
           location = 1;
           direction = 1;
         }
 
-        overlays.push({ type: "Arrow", options: { width: 10, length: 10, foldback: 1, location, direction } });
+        overlays.push({
+          type: "Arrow",
+          options: { width: 10, length: 10, foldback: 1, location, direction },
+        });
       }
 
       if (peer.anchor !== undefined) {
-        anchor = peer["anchor"]
+        anchor = peer.anchor;
       }
 
       instance.connect({

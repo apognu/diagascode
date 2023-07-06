@@ -8,7 +8,7 @@ window.onload = () => {
       title: "User",
     },
     [],
-    { template: "simple-icon" }
+    { template: "simple-icon" },
   );
 
   const lb = new Node(
@@ -17,9 +17,17 @@ window.onload = () => {
       icon: "cloud_load_balancing.svg",
       function: "cloud load balancer",
       title: "Ingress",
-      subtitle: "api.example.com"
+      subtitle: "api.example.com",
     },
-    [[user, { connection: { color: "#989898" }, handles: { sourceColor: "#989898", destColor: "#989898" } }]],
+    [
+      [
+        user,
+        {
+          connection: { color: "#989898" },
+          handles: { sourceColor: "#989898", destColor: "#989898" },
+        },
+      ],
+    ],
   );
 
   const api = new Node(
@@ -28,9 +36,9 @@ window.onload = () => {
       icon: "pod.svg",
       function: "deployment",
       title: "Main API",
-      subtitle: "3 instances"
+      subtitle: "3 instances",
     },
-    [lb]
+    [lb],
   );
 
   const bucket = new Node(
@@ -38,28 +46,28 @@ window.onload = () => {
     {
       icon: "cloud_storage.svg",
       function: "bucket",
-      title: "Uploaded files"
+      title: "Uploaded files",
     },
-    [lb]
-  )
+    [lb],
+  );
 
   const db = new Node(
     { col: api.col + 1, row: api.row },
     {
       icon: "cloud_sql.svg",
       function: "cloud sql",
-      title: "Database"
+      title: "Database",
     },
     [[api, { connection: { dashed: true }, handles: { arrow: true } }]],
-  )
+  );
 
   const cache = new Node(
     { col: api.col, row: api.row + 1 },
     {
       icon: "memorystore.svg",
       function: "memory store",
-      title: "Cache"
+      title: "Cache",
     },
     [[api, { connection: { dashed: true }, handles: { arrow: true } }]],
-  )
+  );
 };

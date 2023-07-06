@@ -1,13 +1,13 @@
-import { AnchorSpec } from '@jsplumb/browser-ui';
+import { AnchorSpec } from "@jsplumb/browser-ui";
 
-import { Node } from './node';
-import { Connection, Handles } from './types';
+import { Node } from "./node";
+import { Connection, Handles } from "./types";
 
 export type PeerOptions = {
-  anchor?: AnchorSpec,
-  connection?: Connection,
-  handles?: Handles,
-}
+  anchor?: AnchorSpec;
+  connection?: Connection;
+  handles?: Handles;
+};
 
 export class Peer {
   node: Node;
