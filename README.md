@@ -43,10 +43,10 @@ const node1 = Node({ row: 1, col: 1 });
 const node2 = Node({ row: node1.row + 1, col: node1.col });
 ```
 
-You can also make a component span several column by setting the `span` attribute:
+You can also make a component span several columns or rows by setting the `rowSpan` or `colSpan` attributes:
 
 ```typescript
-const node1 = Node({ row: 1, col: 1, span: 2 });
+const node1 = Node({ row: 1, col: 1, colSpan: 2, rowSpan: 2 });
 ```
 
 ### Data binding

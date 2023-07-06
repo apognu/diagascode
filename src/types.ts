@@ -1,7 +1,8 @@
 export type Position = {
   col: number,
+  colSpan?: number,
   row: number,
-  span?: number,
+  rowSpan?: number,
 }
 
 export type Appearance = {

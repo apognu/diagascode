@@ -47,8 +47,11 @@ export class Node {
     template.style.gridColumn = this.col.toString();
     template.style.gridRow = this.row.toString();
 
-    if (position.span) {
-      template.style.gridColumn = `${this.col} / span ${position.span}`;
+    if (position.colSpan) {
+      template.style.gridColumn = `${this.col} / span ${position.colSpan}`;
+    }
+    if (position.rowSpan) {
+      template.style.gridRow = `${this.row} / span ${position.rowSpan}`;
     }
 
     if (appearance?.class) {
