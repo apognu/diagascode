@@ -34,7 +34,7 @@ The only required argument (albeit somehow of low use) to create a node is its p
 const node1 = Node({ row: 1, col: 1 });
 ```
 
-This will get the default template of ID `template` from your HTML, duplicate it and place it at the specified coordinates in the CSS grid.
+This will get the default template of ID `dac-dedault-template` from your HTML, duplicate it and place it at the specified coordinates in the CSS grid.
 
 You can use a reference to another node to position a node:
 
@@ -55,8 +55,10 @@ The second parameter to the `Node` constructor is a dictionary of key to value. 
 
 `<img />` tags are handled separately to set the `src` attribute instead of the text content of the tag.
 
+Any custom template must bear the class `dac-template`.
+
 ```html
-<div id="template" class="template">
+<div id="dac-default-template" class="dac-template">
   <p class="title"></p>
   <p class="subtitle"></p>
 </div>

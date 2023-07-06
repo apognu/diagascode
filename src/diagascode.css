@@ -5,7 +5,7 @@
   -webkit-backface-visibility: hidden;
 }
 
-#area {
+#dac-area {
   display: inline-grid;
   grid-auto-columns: max-content;
   grid-row-gap: 48px;
@@ -14,8 +14,12 @@
   justify-items: center;
 }
 
-.template {
+.dac-template {
   display: none !important;
+}
+
+.dac-node {
+  z-index: 2;
 }
 
 .jtk-connector {
@@ -24,8 +28,4 @@
 
 .jtk-endpoint {
   z-index: 1;
-}
-
-.node {
-  z-index: 2;
 }

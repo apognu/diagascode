@@ -1,11 +1,9 @@
-import { AnchorSpec, EndpointSpec, EndpointStyle, OverlaySpec, newInstance } from '@jsplumb/browser-ui';
+import { BrowserJsPlumbInstance, AnchorSpec, EndpointSpec, EndpointStyle, OverlaySpec, newInstance } from '@jsplumb/browser-ui';
 
 import { Position, Appearance } from './types';
 import { Peer, PeerOptions } from './peer';
 
-const instance = newInstance({
-  container: document.getElementById('area')!,
-});
+var instance: BrowserJsPlumbInstance | undefined = undefined;
 
 export class Node {
   id: string;
@@ -13,13 +11,30 @@ export class Node {
   row: number;
 
   constructor(position: Position, data: { [id: string]: string } = {}, peers: Array<Node | [Node, PeerOptions]> = [], appearance?: Appearance) {
+    var area = document.getElementById('dac-area')
+
+    if (!area) {
+      area = document.createElement("div");
+      area.setAttribute("id", "dac-area");
+
+      document.body.prepend(area);
+
+      instance = newInstance({
+        container: area,
+      });
+    }
+
     const { col, row } = position;
 
     this.id = crypto.randomUUID();
     this.col = col;
     this.row = row;
 
-    const templateId = appearance?.template || 'template';
+    if (!instance) {
+      return;
+    }
+
+    const templateId = appearance?.template || 'dac-default-template';
     const template = document.getElementById(templateId)?.cloneNode(true) as HTMLElement;
 
     if (template === undefined) {
@@ -27,12 +42,13 @@ export class Node {
     }
 
     template.setAttribute("id", this.id);
-    template.classList.remove("template");
-    template.style.gridColumn = col.toString();
-    template.style.gridRow = row.toString();
+    template.classList.remove("dac-template");
+    template.classList.add("dac-node");
+    template.style.gridColumn = this.col.toString();
+    template.style.gridRow = this.row.toString();
 
     if (position.span) {
-      template.style.gridColumn = `${col} / span ${position.span}`;
+      template.style.gridColumn = `${this.col} / span ${position.span}`;
     }
 
     if (appearance?.class) {
@@ -60,7 +76,7 @@ export class Node {
       }
     }
 
-    document.getElementById('area')?.appendChild(template);
+    area.appendChild(template);
 
     const node = document.getElementById(this.id)!;
 
