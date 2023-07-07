@@ -50,10 +50,9 @@ export class Canvas {
   }
 
   draw() {
-    console.log("finalize()");
-    for (const index in Object.keys(this._components)) {
-      this._components[index].add(this);
-    }
+    this._components.forEach((component) => {
+      component.add(this);
+    });
 
     document.querySelectorAll<HTMLElement>(".dac-node").forEach((n) => {
       const style = getComputedStyle(n);
