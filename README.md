@@ -32,12 +32,28 @@ General options about the canvas can be configured before any node:
 import { Canvas } from '@apognu/diagascode/src/lib';
 
 window.onload = () => {
+  Canvas.baseFontSize = 14;
   Canvas.backgroundColor = "black";
   Canvas.padding = 32;
+  Canvas.rowGap = 16;
+  Canvas.columnGap = 16;
 }
 ```
 
-## Node definition
+## Zones
+
+You can create zones that encompass several grid cells by instantiating a `Zone`. Any zone created will be sized to reach a quarter of the configured grid gaps. A zone will bear the class `dac-zone` and a zone title will have `dac-zone-title`. When a zone is created, a suitable padding is added to the document so that edge zones are not cropped.
+
+You can customize the appearance of the zone's background and border colors, as well as adding a title.
+
+```typescript
+new Zone(
+  { col: 2, row: 4, colSpan: 2, rowSpan: 2},
+  { background: "red", border: "black", title: "A zone title"}
+)
+```
+
+## Nodes
 
 ### Position
 
