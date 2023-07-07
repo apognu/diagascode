@@ -6,8 +6,8 @@ body {
   font-size: 12px;
 }
 
-#dac-area {
-  display: inline-grid;
+.dac-area {
+  display: grid;
   grid-auto-columns: max-content;
   align-items: center;
   justify-items: center;

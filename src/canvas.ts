@@ -12,6 +12,8 @@ export class Canvas {
   instance: BrowserJsPlumbInstance;
   area: HTMLElement;
 
+  private _drawn: boolean = false;
+
   private _baseFontSize: number = 12;
   private _backgroundColor: string = "white";
   private _padding: number = 0;
@@ -20,21 +22,22 @@ export class Canvas {
 
   private _components: Component[] = [];
 
-  constructor() {
-    let area = document.getElementById("dac-area");
+  constructor(id: string = "dac-area") {
+    let area = document.getElementById(id);
 
     if (!area) {
       area = document.createElement("div");
-      area.setAttribute("id", "dac-area");
-
-      area.style.fontSize = `${this._baseFontSize}px`;
-      area.style.backgroundColor = this._backgroundColor;
-      area.style.padding = `${this._padding}px`;
-      area.style.rowGap = `${this._rowGap}px`;
-      area.style.columnGap = `${this._columnGap}px`;
+      area.setAttribute("id", id);
 
       document.body.prepend(area);
     }
+
+    area.classList.add("dac-area");
+    area.style.fontSize = `${this._baseFontSize}px`;
+    area.style.backgroundColor = this._backgroundColor;
+    area.style.padding = `${this._padding}px`;
+    area.style.rowGap = `${this._rowGap}px`;
+    area.style.columnGap = `${this._columnGap}px`;
 
     this.area = area;
 
@@ -50,6 +53,12 @@ export class Canvas {
   }
 
   draw() {
+    if (this._drawn) {
+      return;
+    }
+
+    this._drawn = true;
+
     this._components.forEach((component) => {
       component.add(this);
     });

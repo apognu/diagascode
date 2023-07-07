@@ -83,14 +83,14 @@ window.onload = () => {
     ),
   );
 
-  const global = canvas.add(
+  canvas.add(
     new Zone(
       { col: 1, colSpan: 1, row: 2, rowSpan: 1 },
       { title: "global", background: "#dedede" },
     ),
   );
 
-  const ew1 = canvas.add(
+  canvas.add(
     new Zone(
       { col: 2, colSpan: 2, row: 2, rowSpan: 2 },
       { title: "europe-west-1", background: "#acded5" },

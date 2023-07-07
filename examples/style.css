@@ -1,7 +1,7 @@
 .box {
   display: flex;
   align-items: center;
-  padding: 8px 18px;
+  padding: 4px 16px;
   background: white;
   border: 1px solid #2980b9;
   border-radius: 4px;
@@ -21,7 +21,7 @@
 .box .title {
   font-size: 14px;
   font-weight: 400;
-  color: black;
+  color: #232323;
 }
 
 .box .function,
