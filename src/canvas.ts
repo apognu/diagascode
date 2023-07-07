@@ -33,6 +33,29 @@ export class Canvas {
     }
   }
 
+  static finalize() {
+    document.querySelectorAll<HTMLElement>(".dac-node").forEach((n) => {
+      const style = getComputedStyle(n);
+      const ph = parseFloat(style.paddingLeft) + parseFloat(style.paddingRight);
+      const pv = parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
+
+      let { width, height } = n.getBoundingClientRect();
+
+      width = Math.ceil(width);
+      height = Math.ceil(height);
+
+      n.style.width = `${width}px`;
+      n.style.height = `${height}px`;
+
+      if (width % 2 !== 0) {
+        n.style.width = `${width - ph + 1}px`;
+      }
+      if (height % 2 !== 0) {
+        n.style.height = `${height - pv + 1}px`;
+      }
+    });
+  }
+
   static get baseFontSize() {
     return this._baseFontSize;
   }

@@ -45,8 +45,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
+  text-align: center;
+}
+
+.simple-icon .square {
+  aspect-ratio: 1 / 1;
   padding: 12px;
   background: white;
   border: 1px solid #2980b9;
@@ -62,5 +65,4 @@
 .simple-icon .title {
   margin: 0;
   font-size: 12px;
-  color: #484848;
 }
