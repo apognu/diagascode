@@ -1,16 +1,26 @@
 import { BrowserJsPlumbInstance, newInstance } from "@jsplumb/browser-ui";
 
+export interface Component {
+  id: string;
+  col: number;
+  row: number;
+
+  add(canvas: Canvas): void;
+}
+
 export class Canvas {
-  static instance: BrowserJsPlumbInstance;
-  static area: HTMLElement;
+  instance: BrowserJsPlumbInstance;
+  area: HTMLElement;
 
-  private static _baseFontSize: number = 12;
-  private static _backgroundColor: string = "white";
-  private static _padding: number = 0;
-  private static _rowGap: number = 48;
-  private static _columnGap: number = 72;
+  private _baseFontSize: number = 12;
+  private _backgroundColor: string = "white";
+  private _padding: number = 0;
+  private _rowGap: number = 48;
+  private _columnGap: number = 72;
 
-  static setup() {
+  private _components: Component[] = [];
+
+  constructor() {
     let area = document.getElementById("dac-area");
 
     if (!area) {
@@ -24,16 +34,27 @@ export class Canvas {
       area.style.columnGap = `${this._columnGap}px`;
 
       document.body.prepend(area);
-
-      this.area = area;
-
-      this.instance = newInstance({
-        container: area,
-      });
     }
+
+    this.area = area;
+
+    this.instance = newInstance({
+      container: area,
+    });
   }
 
-  static finalize() {
+  add(component: Component) {
+    this._components.push(component);
+
+    return component;
+  }
+
+  draw() {
+    console.log("finalize()");
+    for (const index in Object.keys(this._components)) {
+      this._components[index].add(this);
+    }
+
     document.querySelectorAll<HTMLElement>(".dac-node").forEach((n) => {
       const style = getComputedStyle(n);
       const ph = parseFloat(style.paddingLeft) + parseFloat(style.paddingRight);
@@ -56,53 +77,55 @@ export class Canvas {
     });
   }
 
-  static get baseFontSize() {
+  get baseFontSize() {
     return this._baseFontSize;
   }
 
-  static set baseFontSize(size: number) {
+  set baseFontSize(size: number) {
     this._baseFontSize = size;
     this.area.style.fontSize = `${size}px`;
   }
 
-  static get background() {
+  get background() {
     return this._backgroundColor;
   }
 
-  static set background(color: string) {
+  set background(color: string) {
     this._backgroundColor = color;
     this.area.style.backgroundColor = color;
   }
 
-  static get padding() {
+  get padding() {
     return this._padding;
   }
 
-  static set padding(padding: number) {
+  set padding(padding: number) {
     this._padding = padding;
     this.area.style.padding = `${padding}px`;
   }
 
-  static setZonePadding() {
+  setZonePadding() {
     const padding = Math.max(this.rowGap, this.columnGap) / 4;
 
-    this.area.style.padding = `calc(${padding}px + 1.3em)`;
+    if (padding > this.padding) {
+      this.area.style.padding = `calc(${padding}px + 1.3em)`;
+    }
   }
 
-  static get rowGap() {
+  get rowGap() {
     return this._rowGap;
   }
 
-  static set rowGap(gap: number) {
+  set rowGap(gap: number) {
     this._rowGap = gap;
     this.area.style.rowGap = `${gap}px`;
   }
 
-  static get columnGap() {
+  get columnGap() {
     return this._columnGap;
   }
 
-  static set columnGap(gap: number) {
+  set columnGap(gap: number) {
     this._columnGap = gap;
     this.area.style.columnGap = `${gap}px`;
   }

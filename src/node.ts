@@ -4,22 +4,26 @@ import {
   EndpointSpec,
   EndpointStyle,
   OverlaySpec,
-  newInstance,
 } from "@jsplumb/browser-ui";
 
-import { Canvas } from "./canvas";
+import { Canvas, Component } from "./canvas";
 import { Position, Appearance } from "./types";
 import { Peer, PeerOptions } from "./peer";
 
-export class Node {
+type ComponentList = (Component | [Component, PeerOptions])[];
+
+export class Node implements Component {
   id: string;
   col: number;
   row: number;
 
+  private _template?: HTMLElement;
+  private _peers: ComponentList = [];
+
   constructor(
     position: Position,
     data: { [id: string]: string } = {},
-    peers: (Node | [Node, PeerOptions])[] = [],
+    peers: ComponentList = [],
     appearance?: Appearance,
   ) {
     const { col, row } = position;
@@ -27,13 +31,6 @@ export class Node {
     this.id = crypto.randomUUID();
     this.col = col;
     this.row = row;
-
-    if (!Canvas.instance) {
-      console.error(
-        "Canvas was not initialized, please run `Canvas.setup() before adding nodes.",
-      );
-      return;
-    }
 
     const templateId = appearance?.template || "dac-default-template";
     const template = document
@@ -82,11 +79,20 @@ export class Node {
       }
     }
 
-    Canvas.area.appendChild(template);
+    this._template = template;
+    this._peers = peers;
+  }
+
+  add(canvas: Canvas): void {
+    if (!this._template) {
+      return;
+    }
+
+    canvas.area.appendChild(this._template);
 
     const node = document.getElementById(this.id)!;
 
-    for (const spec of peers) {
+    for (const spec of this._peers) {
       let peer: Peer | undefined;
 
       if (spec instanceof Node) {
@@ -158,7 +164,7 @@ export class Node {
         anchor = peer.anchor;
       }
 
-      Canvas.instance.connect({
+      canvas.instance.connect({
         source: node,
         target: document.getElementById(peer.node.id)!,
         anchor,

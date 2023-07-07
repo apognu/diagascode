@@ -26,17 +26,25 @@ To run the example, move there and run `npm exec diagascode` to generate an imag
 
 ## Canvas
 
+A canvas represents one diagram, it starts by being instantiated, and ends by being drawn. In between, you can add settings and components to it.
+
 General options about the canvas can be configured before any node:
 
 ```typescript
 import { Canvas } from '@apognu/diagascode/src/lib';
 
 window.onload = () => {
-  Canvas.baseFontSize = 14;
-  Canvas.backgroundColor = "black";
-  Canvas.padding = 32;
-  Canvas.rowGap = 16;
-  Canvas.columnGap = 16;
+  const canvas = new Canvas();
+  canvas.baseFontSize = 14;
+  canvas.backgroundColor = "black";
+  canvas.padding = 32;
+  canvas.rowGap = 16;
+  canvas.columnGap = 16;
+
+  // Add components
+  canvas.add(...);
+
+  canvas.draw();
 }
 ```
 
@@ -47,10 +55,10 @@ You can create zones that encompass several grid cells by instantiating a `Zone`
 You can customize the appearance of the zone's background and border colors, as well as adding a title.
 
 ```typescript
-new Zone(
+canvas.add(new Zone(
   { col: 2, row: 4, colSpan: 2, rowSpan: 2},
   { background: "red", border: "black", title: "A zone title"}
-)
+));
 ```
 
 ## Nodes
@@ -60,7 +68,7 @@ new Zone(
 The only required argument (albeit somehow of low use) to create a node is its position:
 
 ```typescript
-const node1 = Node({ row: 1, col: 1 });
+const node1 = canvas.add(Node({ row: 1, col: 1 }));
 ```
 
 This will get the default template of ID `dac-dedault-template` from your HTML, duplicate it and place it at the specified coordinates in the CSS grid.
@@ -68,14 +76,14 @@ This will get the default template of ID `dac-dedault-template` from your HTML, 
 You can use a reference to another node to position a node:
 
 ```typescript
-const node1 = Node({ row: 1, col: 1 });
-const node2 = Node({ row: node1.row + 1, col: node1.col });
+const node1 = canvas.add(Node({ row: 1, col: 1 }));
+const node2 = canvas.add(Node({ row: node1.row + 1, col: node1.col }));
 ```
 
 You can also make a component span several columns or rows by setting the `rowSpan` or `colSpan` attributes:
 
 ```typescript
-const node1 = Node({ row: 1, col: 1, colSpan: 2, rowSpan: 2 });
+const node1 = canvas.add(Node({ row: 1, col: 1, colSpan: 2, rowSpan: 2 }));
 ```
 
 ### Data binding
@@ -105,8 +113,8 @@ const node1 = new Node(
 The third parameter to creating a `Node` is the list of connected nodes. In its simplest form, it can be a list of node reference:
 
 ```typescript
-const node1 = Node({ row: 1, col: 1 }, {}, []);
-const node2 = Node({ row: 1, col: 2 }, {}, [node1]); // Will be connected to node1.
+const node1 = canvas.add(Node({ row: 1, col: 1 }, {}, []));
+const node2 = canvas.add(Node({ row: 1, col: 2 }, {}, [node1]); // Will be connected to node1).
 ```
 
 Each connected node can also be provided as a Typescript tuple of `[node_ref, options]`. These options are mainly used to customize the appearance of the connecting line. Is has this form (where all items are optional):
@@ -133,14 +141,14 @@ Each connected node can also be provided as a Typescript tuple of `[node_ref, op
 For example:
 
 ```typescript
-const node1 = Node({ row: 1, col: 1 }, {}, []);
-const node2 = new Node(
+const node1 = canvas.add(Node({ row: 1, col: 1 }, {}, []));
+const node2 = canvas.add(new Node(
   { col: 2, row: 1 },
   { title: 'Lorem ipsum', subtitle: 'Dolor sit amet' },
   [
     [node1, { connection: { dashed: true } }],
   ],
-);
+));
 ```
 
 ### Appearance
