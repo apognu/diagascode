@@ -11,8 +11,6 @@ import { Canvas } from "./canvas";
 import { Position, Appearance } from "./types";
 import { Peer, PeerOptions } from "./peer";
 
-let instance: BrowserJsPlumbInstance | undefined;
-
 export class Node {
   id: string;
   col: number;
@@ -24,28 +22,16 @@ export class Node {
     peers: (Node | [Node, PeerOptions])[] = [],
     appearance?: Appearance,
   ) {
-    let area = document.getElementById("dac-area");
-
-    if (!area) {
-      area = document.createElement("div");
-      area.setAttribute("id", "dac-area");
-      area.style.backgroundColor = Canvas.backgroundColor;
-      area.style.padding = `${Canvas.padding}px`;
-
-      document.body.prepend(area);
-
-      instance = newInstance({
-        container: area,
-      });
-    }
-
     const { col, row } = position;
 
     this.id = crypto.randomUUID();
     this.col = col;
     this.row = row;
 
-    if (!instance) {
+    if (!Canvas.instance) {
+      console.error(
+        "Canvas was not initialized, please run `Canvas.setup() before adding nodes.",
+      );
       return;
     }
 
@@ -96,7 +82,7 @@ export class Node {
       }
     }
 
-    area.appendChild(template);
+    Canvas.area.appendChild(template);
 
     const node = document.getElementById(this.id)!;
 
@@ -172,7 +158,7 @@ export class Node {
         anchor = peer.anchor;
       }
 
-      instance.connect({
+      Canvas.instance.connect({
         source: node,
         target: document.getElementById(peer.node.id)!,
         anchor,

@@ -1,6 +1,8 @@
-import { Node } from "@apognu/diagascode/src/lib";
+import { Zone, Node, Canvas } from "@apognu/diagascode/src/lib";
 
 window.onload = () => {
+  Canvas.setup();
+
   const user = new Node(
     { col: 1, row: 4 },
     {
@@ -69,5 +71,15 @@ window.onload = () => {
       title: "Cache",
     },
     [[api, { connection: { dashed: true }, handles: { arrow: true } }]],
+  );
+
+  const global = new Zone(
+    { col: 1, colSpan: 1, row: 2, rowSpan: 1 },
+    { title: "global", background: "#dedede" },
+  );
+
+  const ew1 = new Zone(
+    { col: 2, colSpan: 2, row: 2, rowSpan: 2 },
+    { title: "europe-west-1", background: "#acded5" },
   );
 };
