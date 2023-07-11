@@ -1,5 +1,7 @@
 # Diagrams as Code (diagascode)
 
+[Try it out!](https://jsfiddle.net/pc5re9on/)
+
 `diagascode` is a Javascript library and a Node script used to generate clean and customization diagrams from Javascript code.
 
 It can be used to get diagrams such as this one:
@@ -31,7 +33,7 @@ A canvas represents one diagram, it starts by being instantiated, and ends by be
 General options about the canvas can be configured before any node:
 
 ```typescript
-import { Canvas } from '@apognu/diagascode/src/lib';
+import { Canvas } from '@apognu/diagascode';
 
 window.onload = () => {
   const canvas = new Canvas();
