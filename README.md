@@ -1,6 +1,6 @@
 # Diagrams as Code (diagascode)
 
-[Try it out!](https://jsfiddle.net/c79njtzv/)
+[Try it out!](https://jsfiddle.net/apognu/uyngxkmL/)
 
 `diagascode` is a Javascript library and a Node script used to generate clean and customization diagrams from Javascript code.
 
