@@ -36,7 +36,7 @@ General options about the canvas can be configured before any node:
 import { Canvas } from '@apognu/diagascode';
 
 window.onload = () => {
-  const canvas = new Canvas();
+  const canvas = new Canvas({ id: "area-id", draggable: false }); // `id` defaults to 'dac-area'
   canvas.baseFontSize = 14;
   canvas.backgroundColor = "black";
   canvas.padding = 32;

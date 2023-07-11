@@ -32,6 +32,10 @@ body {
   z-index: 2;
 }
 
+.dac-node * {
+  pointer-events: none;
+}
+
 .jtk-connector {
   z-index: 0;
 }

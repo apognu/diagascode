@@ -4,6 +4,8 @@ import {
   EndpointSpec,
   EndpointStyle,
   OverlaySpec,
+  Drag,
+  DragManager,
 } from "@jsplumb/browser-ui";
 
 import { Canvas, Component } from "./canvas";
@@ -44,6 +46,7 @@ export class Node implements Component {
     template.setAttribute("id", this.id);
     template.classList.remove("dac-template");
     template.classList.add("dac-node");
+
     template.style.gridColumn = this.col.toString();
     template.style.gridRow = this.row.toString();
 

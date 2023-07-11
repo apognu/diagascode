@@ -1,4 +1,5 @@
 import { BrowserJsPlumbInstance, newInstance } from "@jsplumb/browser-ui";
+import { Zone } from "./zone";
 
 export interface Component {
   id: string;
@@ -7,6 +8,11 @@ export interface Component {
 
   add(canvas: Canvas): void;
 }
+
+export type CanvasOptions = {
+  id?: string;
+  draggable?: boolean;
+};
 
 export class Canvas {
   instance: BrowserJsPlumbInstance;
@@ -21,13 +27,16 @@ export class Canvas {
   private _columnGap: number = 72;
 
   private _components: Component[] = [];
+  private _zones: Zone[] = [];
 
-  constructor(id: string = "dac-area") {
-    let area = document.getElementById(id);
+  constructor(options: CanvasOptions = { id: "dac-area" }) {
+    options.id = options.id || "dac-area";
+
+    let area = document.getElementById(options.id);
 
     if (!area) {
       area = document.createElement("div");
-      area.setAttribute("id", id);
+      area.setAttribute("id", options.id);
 
       document.body.prepend(area);
     }
@@ -43,10 +52,22 @@ export class Canvas {
 
     this.instance = newInstance({
       container: area,
+      elementsDraggable: options.draggable,
+      dragOptions: {
+        start: (params) => {
+          if (params.e.target) {
+            (params.e.target as HTMLElement).style.position = "absolute";
+          }
+        },
+      },
     });
   }
 
   add(component: Component) {
+    if (component instanceof Zone) {
+      this._zones.push(component);
+    }
+
     this._components.push(component);
 
     return component;
@@ -65,10 +86,22 @@ export class Canvas {
 
     document.querySelectorAll<HTMLElement>(".dac-node").forEach((n) => {
       const style = getComputedStyle(n);
-      const ph = parseFloat(style.paddingLeft) + parseFloat(style.paddingRight);
-      const pv = parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
 
-      let { width, height } = n.getBoundingClientRect();
+      const ph =
+        parseFloat(style.paddingLeft) +
+        parseFloat(style.paddingRight) +
+        parseFloat(style.borderLeftWidth) +
+        parseFloat(style.borderRightWidth);
+
+      const pv =
+        parseFloat(style.paddingTop) +
+        parseFloat(style.paddingBottom) +
+        parseFloat(style.borderTopWidth) +
+        parseFloat(style.borderBottomWidth);
+
+      const rect = n.getBoundingClientRect();
+      let { width, height } = rect;
+      const { x, y } = rect;
 
       width = Math.ceil(width);
       height = Math.ceil(height);
@@ -82,6 +115,18 @@ export class Canvas {
       if (height % 2 !== 0) {
         n.style.height = `${height - pv + 1}px`;
       }
+
+      const placeholder = document.createElement("div");
+
+      placeholder.style.gridColumn = n.style.gridColumn;
+      placeholder.style.gridRow = n.style.gridRow;
+      placeholder.style.width = `${width + ph}px`;
+      placeholder.style.height = `${height + pv}px`;
+
+      this.area.appendChild(placeholder);
+
+      n.style.top = `${y}px`;
+      n.style.left = `${x}px`;
     });
   }
 

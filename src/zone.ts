@@ -27,6 +27,7 @@ export class Zone implements Component {
 
     const zone = document.createElement("div");
 
+    zone.setAttribute("id", this.id);
     zone.classList.add("dac-zone");
 
     zone.style.gridColumn = `${this.position.col} / span ${this.position.colSpan}`;

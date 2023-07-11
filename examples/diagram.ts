@@ -1,4 +1,4 @@
-import { Zone, Node, Canvas } from "@apognu/diagascode/src/lib";
+import { Zone, Node, Canvas } from "@apognu/diagascode";
 
 window.onload = () => {
   const canvas = new Canvas();
