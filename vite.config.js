@@ -10,6 +10,7 @@ export default defineConfig({
     },
     src: "./src",
     outDir: "./dist",
+    emptyOutDir: false,
   },
   plugins: [],
 });

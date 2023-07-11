@@ -9,12 +9,12 @@
     "./dist": "./dist/diagascode.es.js",
     "./dist/*": "./dist/"
   },
-  "types": "./src/lib.d.ts",
+  "types": "./types/lib.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/apognu/diagascode"
   },
-  "description": "",
+  "description": "Generate pretty infrastructure diagram with code",
   "bin": {
     "diagascode": "bin/generate.js"
   },
@@ -22,9 +22,9 @@
     "node": "^14.18.0 || >=16.0.0"
   },
   "scripts": {
-    "build": "vite build",
+    "build": "tsc && vite build",
     "dev": "vite dev",
-    "generate": "tsc && node bin/generate.js"
+    "generate": "node bin/generate.js"
   },
   "author": "Antoine POPINEAU",
   "license": "MIT",
