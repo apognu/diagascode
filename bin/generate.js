@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-const { spawn } = require("child_process");
-const waitPort = require("wait-port");
-const puppeteer = require("puppeteer");
+import { spawn } from "child_process";
+import waitPort from "wait-port";
+import puppeteer from "puppeteer";
 
 const PORT = 12345;
 

@@ -7,7 +7,7 @@ body {
 }
 
 .dac-area {
-  display: grid;
+  display: inline-grid;
   grid-auto-columns: max-content;
   align-items: center;
   justify-items: center;
