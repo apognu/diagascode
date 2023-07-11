@@ -15,9 +15,16 @@ jobs:
           node-version: "18.x"
           cache: "npm"
           registry-url: https://registry.npmjs.org
+      - run: npm install
       - run: npm exec prettier -- --check '**/*.{js,ts}'
       - run: npm exec tslint -- '**/*.ts'
       - run: npm run build
+      - name: Create release
+        uses: marvinpinto/action-automatic-releases@latest
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          prerelease: false
+          files: dist/*
       - run: npm publish --public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
