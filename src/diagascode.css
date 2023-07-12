@@ -19,6 +19,7 @@ body {
 
 .dac-zone {
   z-index: 5;
+  background: #dfdfdf;
   border-radius: 8px;
   text-align: center;
 }
