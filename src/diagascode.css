@@ -18,6 +18,7 @@ body {
 }
 
 .dac-zone {
+  z-index: 5;
   border-radius: 8px;
   text-align: center;
 }
@@ -29,7 +30,7 @@ body {
 }
 
 .dac-node {
-  z-index: 2;
+  z-index: 20;
 }
 
 .dac-node * {
@@ -37,9 +38,9 @@ body {
 }
 
 .jtk-connector {
-  z-index: 0;
+  z-index: 10;
 }
 
 .jtk-endpoint {
-  z-index: 1;
+  z-index: 10;
 }

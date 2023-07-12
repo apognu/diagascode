@@ -5,6 +5,7 @@ export interface Component {
   id: string;
   col: number;
   row: number;
+  el: HTMLElement;
 
   add(canvas: Canvas): void;
 }
@@ -31,6 +32,7 @@ export class Canvas {
 
   constructor(options: CanvasOptions = { id: "dac-area" }) {
     options.id = options.id || "dac-area";
+    options.draggable = options.draggable || false;
 
     let area = document.getElementById(options.id);
 
@@ -57,6 +59,22 @@ export class Canvas {
         start: (params) => {
           if (params.e.target) {
             (params.e.target as HTMLElement).style.position = "absolute";
+          }
+        },
+        stop: (params) => {
+          if (params.e) {
+            const target = params.e.target as HTMLElement;
+            const node = document.getElementById(
+              target.getAttribute("id") || "",
+            );
+
+            if (node) {
+              this._zones.forEach((zone) => {
+                if (zone.components.includes(node)) {
+                  zone.fit();
+                }
+              });
+            }
           }
         },
       },

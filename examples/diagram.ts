@@ -1,7 +1,7 @@
 import { Zone, Node, Canvas } from "@apognu/diagascode";
 
 window.onload = () => {
-  const canvas = new Canvas();
+  const canvas = new Canvas({ draggable: true });
 
   const user = new Node(
     { col: 1, row: 4 },
@@ -84,17 +84,17 @@ window.onload = () => {
   );
 
   canvas.add(
-    new Zone(
-      { col: 1, colSpan: 1, row: 2, rowSpan: 1 },
-      { title: "global", background: "#dedede" },
-    ),
+    new Zone({ col: 1, colSpan: 1, row: 2, rowSpan: 1 }, [lb], {
+      title: "global",
+      background: "#dedede",
+    }),
   );
 
   canvas.add(
-    new Zone(
-      { col: 2, colSpan: 2, row: 2, rowSpan: 2 },
-      { title: "europe-west-1", background: "#acded5" },
-    ),
+    new Zone({ col: 2, colSpan: 2, row: 2, rowSpan: 2 }, [api, db, cache], {
+      title: "europe-west-1",
+      background: "#acded5",
+    }),
   );
 
   canvas.draw();

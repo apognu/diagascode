@@ -1,11 +1,8 @@
 import {
-  BrowserJsPlumbInstance,
   AnchorSpec,
   EndpointSpec,
   EndpointStyle,
   OverlaySpec,
-  Drag,
-  DragManager,
 } from "@jsplumb/browser-ui";
 
 import { Canvas, Component } from "./canvas";
@@ -18,8 +15,8 @@ export class Node implements Component {
   id: string;
   col: number;
   row: number;
+  el: HTMLElement;
 
-  private _template?: HTMLElement;
   private _peers: ComponentList = [];
 
   constructor(
@@ -35,43 +32,44 @@ export class Node implements Component {
     this.row = row;
 
     const templateId = appearance?.template || "dac-default-template";
-    const template = document
+
+    this.el = document
       .getElementById(templateId)
       ?.cloneNode(true) as HTMLElement;
 
-    if (template === undefined) {
+    if (this.el === undefined) {
       return;
     }
 
-    template.setAttribute("id", this.id);
-    template.classList.remove("dac-template");
-    template.classList.add("dac-node");
+    this.el.setAttribute("id", this.id);
+    this.el.classList.remove("dac-template");
+    this.el.classList.add("dac-node");
 
-    template.style.gridColumn = this.col.toString();
-    template.style.gridRow = this.row.toString();
+    this.el.style.gridColumn = this.col.toString();
+    this.el.style.gridRow = this.row.toString();
 
     if (position.colSpan) {
-      template.style.gridColumn = `${this.col} / span ${position.colSpan}`;
+      this.el.style.gridColumn = `${this.col} / span ${position.colSpan}`;
     }
     if (position.rowSpan) {
-      template.style.gridRow = `${this.row} / span ${position.rowSpan}`;
+      this.el.style.gridRow = `${this.row} / span ${position.rowSpan}`;
     }
 
     if (appearance?.class) {
-      template.classList.add(appearance.class);
+      this.el.classList.add(appearance.class);
     }
     if (appearance?.background) {
-      template.style.backgroundColor = appearance.background;
+      this.el.style.backgroundColor = appearance.background;
     }
     if (appearance?.borderColor) {
-      template.style.borderColor = appearance.borderColor;
+      this.el.style.borderColor = appearance.borderColor;
     }
     if (appearance?.borderSize) {
-      template.style.borderWidth = `${appearance.borderSize}px`;
+      this.el.style.borderWidth = `${appearance.borderSize}px`;
     }
 
     for (const key of Object.keys(data)) {
-      const el = template.querySelector(`.${key}`);
+      const el = this.el.querySelector(`.${key}`);
 
       if (el) {
         if (el.tagName === "IMG") {
@@ -82,16 +80,15 @@ export class Node implements Component {
       }
     }
 
-    this._template = template;
     this._peers = peers;
   }
 
   add(canvas: Canvas): void {
-    if (!this._template) {
+    if (!this.el) {
       return;
     }
 
-    canvas.area.appendChild(this._template);
+    canvas.area.appendChild(this.el);
 
     const node = document.getElementById(this.id)!;
 
