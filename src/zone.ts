@@ -46,8 +46,8 @@ export class Zone implements Component {
 
     this.el.style.gridColumn = `${this.position.col} / span ${this.position.colSpan}`;
     this.el.style.gridRow = `${this.position.row} / span ${this.position.rowSpan}`;
-    this.el.style.width = `calc(100% + (${canvas.columnGap}px / 2))`;
-    this.el.style.height = `calc(100% + (${canvas.rowGap}px / 2))`;
+    this.el.style.width = `calc(100% + (${canvas.options.columnGap}px / 2))`;
+    this.el.style.height = `calc(100% + (${canvas.options.rowGap}px / 2))`;
 
     if (this.options.background) {
       this.el.style.backgroundColor = this.options.background;

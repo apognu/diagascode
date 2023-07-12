@@ -12,34 +12,41 @@ export interface Component {
 
 export type CanvasOptions = {
   id?: string;
+
   title?: string;
   subtitle?: string;
+
+  baseFontSize?: number;
+  background?: string;
+  padding?: number;
+  rowGap?: number;
+  columnGap?: number;
+
   draggable?: boolean;
 };
 
 export class Canvas {
   instance: BrowserJsPlumbInstance;
   area: HTMLElement;
+  options: CanvasOptions;
 
   private _drawn: boolean = false;
-
-  private _baseFontSize: number = 12;
-  private _backgroundColor: string = "white";
-  private _padding: number = 0;
-  private _rowGap: number = 48;
-  private _columnGap: number = 72;
-  private _title?: string;
-  private _subtitle?: string;
 
   private _components: Component[] = [];
   private _zones: Zone[] = [];
 
   constructor(options: CanvasOptions = {}) {
-    options.id = options.id || "dac-area";
-    options.draggable = options.draggable || false;
+    options.id ||= "dac-area";
 
-    this._title = options.title;
-    this._subtitle = options.subtitle;
+    options.baseFontSize ||= 12;
+    options.background ||= "white";
+    options.padding ||= 0;
+    options.rowGap ||= 48;
+    options.columnGap ||= 72;
+
+    options.draggable ||= false;
+
+    this.options = options;
 
     let area = document.getElementById(options.id);
 
@@ -51,11 +58,11 @@ export class Canvas {
     }
 
     area.classList.add("dac-area");
-    area.style.fontSize = `${this._baseFontSize}px`;
-    area.style.backgroundColor = this._backgroundColor;
-    area.style.padding = `${this._padding}px`;
-    area.style.rowGap = `${this._rowGap}px`;
-    area.style.columnGap = `${this._columnGap}px`;
+    area.style.fontSize = `${this.options.baseFontSize}px`;
+    area.style.backgroundColor = this.options.background!;
+    area.style.padding = `${this.options.padding}px`;
+    area.style.rowGap = `${this.options.rowGap}px`;
+    area.style.columnGap = `${this.options.columnGap}px`;
 
     this.area = area;
 
@@ -174,18 +181,18 @@ export class Canvas {
     titles.style.gridRow = `${maxRow + 1}`;
     titles.style.gridColumn = `1 / span ${maxCol}`;
 
-    if (this._title) {
+    if (this.options.title) {
       const title = document.createElement("p");
       title.setAttribute("id", "dac-title");
-      title.textContent = this._title;
+      title.textContent = this.options.title;
 
       titles.appendChild(title);
     }
 
-    if (this._subtitle) {
+    if (this.options.subtitle) {
       const subtitle = document.createElement("p");
       subtitle.setAttribute("id", "dac-subtitle");
-      subtitle.textContent = this._subtitle;
+      subtitle.textContent = this.options.subtitle;
 
       titles.appendChild(subtitle);
     }
@@ -193,56 +200,11 @@ export class Canvas {
     this.area.appendChild(titles);
   }
 
-  get baseFontSize() {
-    return this._baseFontSize;
-  }
-
-  set baseFontSize(size: number) {
-    this._baseFontSize = size;
-    this.area.style.fontSize = `${size}px`;
-  }
-
-  get background() {
-    return this._backgroundColor;
-  }
-
-  set background(color: string) {
-    this._backgroundColor = color;
-    this.area.style.backgroundColor = color;
-  }
-
-  get padding() {
-    return this._padding;
-  }
-
-  set padding(padding: number) {
-    this._padding = padding;
-    this.area.style.padding = `${padding}px`;
-  }
-
   setZonePadding() {
-    const padding = Math.max(this.rowGap, this.columnGap) / 4;
+    const padding = Math.max(this.options.rowGap!, this.options.columnGap!) / 4;
 
-    if (padding > this.padding) {
+    if (padding > this.options.padding!) {
       this.area.style.padding = `calc(${padding}px + 1.3em)`;
     }
-  }
-
-  get rowGap() {
-    return this._rowGap;
-  }
-
-  set rowGap(gap: number) {
-    this._rowGap = gap;
-    this.area.style.rowGap = `${gap}px`;
-  }
-
-  get columnGap() {
-    return this._columnGap;
-  }
-
-  set columnGap(gap: number) {
-    this._columnGap = gap;
-    this.area.style.columnGap = `${gap}px`;
   }
 }

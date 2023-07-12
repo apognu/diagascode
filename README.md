@@ -40,14 +40,13 @@ window.onload = () => {
     id: "area-id", // defaults to 'dac-area'
     title: "Diagram title",
     subtitle: "Some diagram subtitle",
+    baseFontSize: 16,
+    background: "red",
+    padding: 32,
+    columnGap: 32,
+    rowGap: 32,
     draggable: false
   });
-
-  canvas.baseFontSize = 14;
-  canvas.backgroundColor = "black";
-  canvas.padding = 32;
-  canvas.rowGap = 16;
-  canvas.columnGap = 16;
 
   // Add components
   canvas.add(...);
