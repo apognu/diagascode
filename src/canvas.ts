@@ -30,7 +30,7 @@ export class Canvas {
   private _components: Component[] = [];
   private _zones: Zone[] = [];
 
-  constructor(options: CanvasOptions = { id: "dac-area" }) {
+  constructor(options: CanvasOptions = {}) {
     options.id = options.id || "dac-area";
     options.draggable = options.draggable || false;
 
