@@ -36,7 +36,13 @@ General options about the canvas can be configured before any node:
 import { Canvas } from '@apognu/diagascode';
 
 window.onload = () => {
-  const canvas = new Canvas({ id: "area-id", draggable: false }); // `id` defaults to 'dac-area'
+  const canvas = new Canvas({
+    id: "area-id", // defaults to 'dac-area'
+    title: "Diagram title",
+    subtitle: "Some diagram subtitle",
+    draggable: false
+  });
+
   canvas.baseFontSize = 14;
   canvas.backgroundColor = "black";
   canvas.padding = 32;
@@ -49,6 +55,8 @@ window.onload = () => {
   canvas.draw();
 }
 ```
+
+`dragable: true` makes nodes dragable when used on a webpage. The title and subtitle will appear underneath the diagram and will bear the IDs `dac-title` and `dac-subtitle`.
 
 ## Zones
 

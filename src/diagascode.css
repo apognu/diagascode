@@ -38,6 +38,25 @@ body {
   pointer-events: none;
 }
 
+#dac-titles {
+  text-align: center;
+}
+
+#dac-titles p {
+  margin: 0;
+}
+
+#dac-title {
+  font-size: 1.3em;
+  font-weight: bold !important;
+}
+
+#dac-subtitle {
+  font-size: 1.1em;
+  font-style: italic;
+  color: #343434;
+}
+
 .jtk-connector {
   z-index: 10;
 }

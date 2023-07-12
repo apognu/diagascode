@@ -12,6 +12,8 @@ export interface Component {
 
 export type CanvasOptions = {
   id?: string;
+  title?: string;
+  subtitle?: string;
   draggable?: boolean;
 };
 
@@ -26,6 +28,8 @@ export class Canvas {
   private _padding: number = 0;
   private _rowGap: number = 48;
   private _columnGap: number = 72;
+  private _title?: string;
+  private _subtitle?: string;
 
   private _components: Component[] = [];
   private _zones: Zone[] = [];
@@ -33,6 +37,9 @@ export class Canvas {
   constructor(options: CanvasOptions = {}) {
     options.id = options.id || "dac-area";
     options.draggable = options.draggable || false;
+
+    this._title = options.title;
+    this._subtitle = options.subtitle;
 
     let area = document.getElementById(options.id);
 
@@ -102,8 +109,19 @@ export class Canvas {
       component.add(this);
     });
 
+    let [maxRow, maxCol] = [0, 0];
+
     document.querySelectorAll<HTMLElement>(".dac-node").forEach((n) => {
       const style = getComputedStyle(n);
+      const row = parseFloat(style.gridRow);
+      const col = parseFloat(style.gridColumn);
+
+      if (row > maxRow) {
+        maxRow = row;
+      }
+      if (col > maxCol) {
+        maxCol = col;
+      }
 
       const ph =
         parseFloat(style.paddingLeft) +
@@ -146,6 +164,33 @@ export class Canvas {
       n.style.top = `${y}px`;
       n.style.left = `${x}px`;
     });
+
+    this.setTitles(maxRow, maxCol);
+  }
+
+  private setTitles(maxRow: number, maxCol: number) {
+    const titles = document.createElement("div");
+    titles.setAttribute("id", "dac-titles");
+    titles.style.gridRow = `${maxRow + 1}`;
+    titles.style.gridColumn = `1 / span ${maxCol}`;
+
+    if (this._title) {
+      const title = document.createElement("p");
+      title.setAttribute("id", "dac-title");
+      title.textContent = this._title;
+
+      titles.appendChild(title);
+    }
+
+    if (this._subtitle) {
+      const subtitle = document.createElement("p");
+      subtitle.setAttribute("id", "dac-subtitle");
+      subtitle.textContent = this._subtitle;
+
+      titles.appendChild(subtitle);
+    }
+
+    this.area.appendChild(titles);
   }
 
   get baseFontSize() {

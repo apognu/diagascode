@@ -1,7 +1,11 @@
 import { Zone, Node, Canvas } from "@apognu/diagascode";
 
 window.onload = () => {
-  const canvas = new Canvas({ draggable: true });
+  const canvas = new Canvas({
+    title: "Hello, world!",
+    subtitle: "Lorem ipsum dolor sit amet",
+    draggable: true,
+  });
 
   const user = new Node(
     { col: 1, row: 4 },
