@@ -1,6 +1,6 @@
 {
   "name": "@apognu/diagascode",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "homepage": "https://github.com/apognu/diagascode",
   "type": "module",
   "main": "./dist/diagascode.es.js",
