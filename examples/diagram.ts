@@ -7,14 +7,16 @@ window.onload = () => {
     draggable: true,
   });
 
-  const user = new Node(
-    { col: 1, row: 4 },
-    {
-      icon: "my_cloud.svg",
-      title: "User",
-    },
-    [],
-    { template: "simple-icon" },
+  const user = canvas.add(
+    new Node(
+      { col: 1, row: 3 },
+      {
+        icon: "my_cloud.svg",
+        title: "User",
+      },
+      [],
+      { template: "simple-icon" },
+    ),
   );
 
   const lb = canvas.add(
@@ -30,8 +32,8 @@ window.onload = () => {
         [
           user,
           {
-            connection: { color: "#989898" },
-            handles: { sourceColor: "#989898", destColor: "#989898" },
+            connection: { color: "#558fa7" },
+            handles: { sourceColor: "#558fa7", destColor: "#558fa7" },
           },
         ],
       ],
