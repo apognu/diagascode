@@ -173,6 +173,8 @@ export class Canvas {
     });
 
     this.setTitles(maxRow, maxCol);
+
+    this.instance.repaintEverything();
   }
 
   private setTitles(maxRow: number, maxCol: number) {

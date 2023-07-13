@@ -1,4 +1,4 @@
-import "./diagascode.css";
+import "./diagascode.scss";
 
 export { Canvas } from "./canvas";
 export { Node } from "./node";

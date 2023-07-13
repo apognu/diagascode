@@ -58,6 +58,7 @@ window.onload = () => {
         icon: "cloud_storage.svg",
         function: "bucket",
         title: "Uploaded files",
+        subtitle: "my-bucket/",
       },
       [lb],
     ),
