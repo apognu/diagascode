@@ -60,7 +60,7 @@ window.onload = () => {
         title: "Uploaded files",
         subtitle: "my-bucket/",
       },
-      [lb],
+      [[lb, { connection: { cornerRadius: 8 } }]],
     ),
   );
 

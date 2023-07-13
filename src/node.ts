@@ -2,6 +2,7 @@ import {
   AnchorSpec,
   EndpointSpec,
   EndpointStyle,
+  FlowchartConnectorOptions,
   OverlaySpec,
 } from "@jsplumb/browser-ui";
 
@@ -108,6 +109,7 @@ export class Node implements Component {
       }
 
       const paintStyle = { stroke: "black", strokeWidth: 1, dashstyle: "0" };
+      const connectorOptions: FlowchartConnectorOptions = {};
       const endpointStyles: [EndpointStyle, EndpointStyle] = [
         { fill: "black" },
         { fill: "black" },
@@ -117,6 +119,9 @@ export class Node implements Component {
       let endpoint: EndpointSpec = { type: "Blank", options: {} };
       let anchor: AnchorSpec = "AutoDefault";
 
+      if (peer.connection?.cornerRadius) {
+        connectorOptions.cornerRadius = peer.connection.cornerRadius;
+      }
       if (peer.connection?.dashed) {
         paintStyle.dashstyle = "1 4";
       }
@@ -168,7 +173,10 @@ export class Node implements Component {
         source: node,
         target: document.getElementById(peer.node.id)!,
         anchor,
-        connector: "Flowchart",
+        connector: {
+          type: "Flowchart",
+          options: connectorOptions,
+        },
         paintStyle,
         endpointStyles,
         endpoint,

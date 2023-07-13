@@ -139,6 +139,7 @@ Each connected node can also be provided as a Typescript tuple of `[node_ref, op
     direction?: "from" | "to", // On which component to place the arrow
   },
   connection?: {
+    cornerRadius?: number, // Corner radius for this connection (defaults to none)
     dashed?: boolean, // Whether to draw the line as dashed instead of full
     color?: string, // Color of the line
     size?: number, // Width of the line

@@ -14,6 +14,7 @@ export type Appearance = {
 };
 
 export type Connection = {
+  cornerRadius?: number;
   dashed?: boolean;
   color?: string;
   size?: number;
