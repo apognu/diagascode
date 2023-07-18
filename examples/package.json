@@ -10,5 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "@apognu/diagascode": "file:.."
+  },
+  "devDependencies": {
+    "@modyfi/vite-plugin-yaml": "^1.0.4"
   }
 }

@@ -1,5 +1,6 @@
 import { BrowserJsPlumbInstance, newInstance } from "@jsplumb/browser-ui";
 import { Zone } from "./zone";
+import { YamlCanvas } from "./yaml";
 
 export interface Component {
   id: string;
@@ -208,5 +209,11 @@ export class Canvas {
     if (padding > this.options.padding!) {
       this.area.style.padding = `calc(${padding}px + 1.3em)`;
     }
+  }
+
+  static fromYaml(yaml: unknown) {
+    const canvas = Object.assign(new YamlCanvas(), yaml);
+
+    canvas.draw();
   }
 }

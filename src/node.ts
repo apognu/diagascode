@@ -10,7 +10,7 @@ import { Canvas, Component } from "./canvas";
 import { Position, Appearance } from "./types";
 import { Peer, PeerOptions } from "./peer";
 
-type ComponentList = (Component | [Component, PeerOptions])[];
+export type ComponentList = (Component | [Component, PeerOptions])[];
 
 export class Node implements Component {
   id: string;

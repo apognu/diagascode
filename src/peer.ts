@@ -1,6 +1,5 @@
 import { AnchorSpec } from "@jsplumb/browser-ui";
 
-import { Node } from "./node";
 import { Connection, Handles } from "./types";
 import { Component } from "./canvas";
 

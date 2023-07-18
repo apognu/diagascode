@@ -1,0 +1,84 @@
+options:
+  title: Hello, world
+  subtitle: Lorem ipsum dolor sit amet
+  draggable: true
+components:
+  - id: user
+    position: { col: 1, row: 3 }
+    data:
+      icon: my_cloud.svg
+      title: User
+    appearance:
+      template: simple-icon
+
+  - id: lb
+    position: { col: 1, row: 2 }
+    data:
+      icon: cloud_load_balancing.svg
+      function: cloud load balancer
+      title: Ingress
+      subtitle: api.example.com
+    peers:
+      - user
+
+  - id: api
+    position: { col: 2, row: 2 }
+    data:
+      icon: pod.svg
+      function: deployment
+      title: Main API
+      subtitle: 3 instances
+    peers:
+      - lb
+
+  - id: bucket
+    position: { col: 2, row: 1 }
+    data:
+      icon: cloud_storage.svg
+      function: bucket
+      title: Uploaded files
+      subtitle: my-bucket/
+    peers:
+      - id: lb
+        connection:
+          cornerRadius: 8
+          color: "#f38c8f"
+          label: HTTP
+
+  - id: db
+    position: { col: 3, row: 2 }
+    data:
+      icon: cloud_sql.svg
+      function: cloud sql
+      title: Database
+    peers:
+      - id: api
+        connection:
+          dashed: true
+        handles:
+          arrow: true
+
+  - id: cache
+    position: { col: 2, row: 3 }
+    data:
+      icon: memorystore.svg
+      function: memory store
+      title: Cache
+    peers:
+      - id: api
+        connection:
+          dashed: true
+        handles:
+          arrow: true
+zones:
+  - position: { col: 1, colSpan: 1, row: 2, rowSpan: 1 }
+    components: [lb]
+    options:
+      title: global
+      background: "#dedede"
+
+  - position: { col: 2, colSpan: 2, row: 2, rowSpan: 2 }
+    components: [api, db, cache]
+    options:
+      title: europe-west-1
+      background: "#acded5"
