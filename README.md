@@ -7,6 +7,7 @@
 It can be used to get diagrams such as this one:
 
 ![Example diagram generated with diagascode](contrib/example.png)
+![Another example](contrib/aws.png)
 
 ## Concepts
 
