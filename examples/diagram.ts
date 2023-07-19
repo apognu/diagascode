@@ -92,7 +92,15 @@ window.onload = () => {
         function: "memory store",
         title: "Cache",
       },
-      [[api, { connection: { dashed: true }, handles: { arrow: true } }]],
+      [
+        [
+          api,
+          {
+            connection: { dashed: true },
+            handles: { arrow: true },
+          },
+        ],
+      ],
     ),
   );
 

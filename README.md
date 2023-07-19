@@ -143,7 +143,7 @@ Each connected node can also be provided as a Typescript tuple of `[node_ref, op
     sourceColor?: string, // Color of the source port
     destColor?: string, // Color of the destination (peer) port
     arrow?: boolean, // Whether to replace the port with an arrow
-    direction?: "from" | "to", // On which component to place the arrow
+    direction?: "self" | "peer", // Which component should the arrow point
   },
   connection?: {
     cornerRadius?: number, // Corner radius for this connection (defaults to none)

@@ -26,5 +26,5 @@ export type Handles = {
   sourceColor?: string;
   destColor?: string;
   arrow?: boolean;
-  direction?: "from" | "to";
+  direction?: "self" | "peer";
 };

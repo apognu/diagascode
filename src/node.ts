@@ -154,7 +154,7 @@ export class Node implements Component {
         let location = 0;
         let direction = -1;
 
-        if (peer.handles.direction === "from") {
+        if (peer.handles.direction === "peer") {
           location = 1;
           direction = 1;
         }
