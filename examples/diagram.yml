@@ -1,7 +1,8 @@
 options:
-  title: Hello, world
+  title: Hello, world!
   subtitle: Lorem ipsum dolor sit amet
   draggable: true
+  columnGap: 92
 components:
   - id: user
     position: { col: 1, row: 3 }

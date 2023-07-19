@@ -5,7 +5,7 @@ body {
 .box {
   display: flex;
   align-items: center;
-  padding: 4px 16px;
+  padding: 2px 14px;
   background: white;
   border: 1px solid #2980b9;
   border-radius: 4px;
@@ -22,26 +22,24 @@ body {
   margin: 0;
 }
 
-.box .title {
-  font-size: 1.1rem;
-  font-weight: 400;
-  color: #232323;
-}
-
 .box .function,
 .box .subtitle {
   color: #484848;
 }
 
+.box .title {
+  font-size: 1rem;
+  font-weight: 400;
+  color: #232323;
+}
+
 .box .function {
-  margin-bottom: 2px;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
   font-variant: small-caps;
 }
 
 .box .subtitle {
-  margin-top: 2px;
-  font-size: 1rem;
+  font-size: 0.8rem;
 }
 
 .simple-icon {

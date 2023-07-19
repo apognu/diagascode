@@ -5,6 +5,7 @@ window.onload = () => {
     title: "Hello, world!",
     subtitle: "Lorem ipsum dolor sit amet",
     draggable: true,
+    columnGap: 92,
   });
 
   const user = canvas.add(
