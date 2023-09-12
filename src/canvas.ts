@@ -2,6 +2,8 @@ import { BrowserJsPlumbInstance, newInstance } from "@jsplumb/browser-ui";
 import { Zone } from "./zone";
 import { YamlCanvas } from "./yaml";
 
+export var DefaultTemplate = "dac-default";
+
 export interface Component {
   id: string;
   col: number;
@@ -16,6 +18,8 @@ export type CanvasOptions = {
 
   title?: string;
   subtitle?: string;
+
+  defaultTemplate?: string;
 
   baseFontSize?: number;
   background?: string;
@@ -38,6 +42,9 @@ export class Canvas {
 
   constructor(options: CanvasOptions = {}) {
     options.id ||= "dac-area";
+    options.defaultTemplate ||= "dac-default-template";
+
+    DefaultTemplate = options.defaultTemplate;
 
     options.baseFontSize ||= 12;
     options.background ||= "white";

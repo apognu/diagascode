@@ -56,8 +56,35 @@
   .jtk-endpoint {
     z-index: 11;
   }
+
+  .jtk-overlay {
+    background: white;
+    z-index: 1000;
+    color: #525252;
+  }
 }
 
 .dac-template {
   display: none !important;
+}
+
+.dac-default {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8px 16px;
+  background: #eaeaea;
+  border-radius: 8px;
+
+  .title {
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+
+  .function {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #343434;
+  }
 }

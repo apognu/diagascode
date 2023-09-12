@@ -6,7 +6,7 @@ import {
   OverlaySpec,
 } from "@jsplumb/browser-ui";
 
-import { Canvas, Component } from "./canvas";
+import { Canvas, Component, DefaultTemplate } from "./canvas";
 import { Position, Appearance } from "./types";
 import { Peer, PeerOptions } from "./peer";
 
@@ -32,7 +32,7 @@ export class Node implements Component {
     this.col = col;
     this.row = row;
 
-    const templateId = appearance?.template || "dac-default-template";
+    const templateId = appearance?.template || DefaultTemplate;
 
     this.el = document
       .getElementById(templateId)

@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap" />
+  <link rel="stylesheet" href="/dist/style.css" />
+  <link rel="stylesheet" href="/overrides/style.css" />
+</head>
+
+<body>
+  <div id="dac-default-template" class="dac-template dac-default">
+    <p class="title"></p>
+    <p class="function"></p>
+  </div>
+
+  {{ .templates }}
+</body>
+
+<script type="importmap">
+{
+  "imports": {
+    "@apognu/diagascode": "/dist/diagascode.es.js"
+  }
+}
+</script>
+
+<script type="module" src="/overrides/diagram.js"></script>
+
+</html>

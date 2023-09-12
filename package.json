@@ -23,8 +23,7 @@
   },
   "scripts": {
     "build": "tsc && vite build",
-    "dev": "vite dev",
-    "generate": "node bin/generate.js"
+    "dev": "vite dev"
   },
   "author": "Antoine POPINEAU",
   "license": "MIT",
