@@ -66,7 +66,7 @@ window.onload = () => {
     ),
   );
 
-  const sql_sa = canvas.add(
+  const sqlSa = canvas.add(
     new Node(
       { col: 3, row: 3 },
       {
@@ -87,7 +87,7 @@ window.onload = () => {
         function: "cloud sql",
         title: "Repository",
       },
-      [[sql_sa, { handles: { arrow: true } }]],
+      [[sqlSa, { handles: { arrow: true } }]],
       { background: "#cbe5df" },
     ),
   );

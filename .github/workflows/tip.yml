@@ -2,7 +2,7 @@ name: Publish to NPM
 
 on:
   push:
-    tags: ["*"]
+    branches: ["master"]
 
 jobs:
   build:
@@ -15,16 +15,25 @@ jobs:
           node-version: "18.x"
           cache: "npm"
           registry-url: https://registry.npmjs.org
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: "1.21"
       - run: npm install
       - run: npm exec prettier -- --check '**/*.{js,ts}'
       - run: npm exec tslint -- '**/*.ts'
       - run: npm run build
+      - name: Build diagascode
+        run: |
+          mkdir out/
+          GOOS=linux go build -v -o out/diagascode-linux-amd64 .
+          GOOS=windows go build -v -o out/diagascode-windows-amd64 .
+          GOOS=darwin go build -v -o out/diagascode-macos-amd64 .
       - name: Create release
         uses: marvinpinto/action-automatic-releases@latest
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          prerelease: false
-          files: dist/*
-      - run: npm publish --public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          automatic_release_tag: tip
+          title: Development build
+          prerelease: true
+          files: out/*
