@@ -2,7 +2,7 @@ import { BrowserJsPlumbInstance, newInstance } from "@jsplumb/browser-ui";
 import { Zone } from "./zone";
 import { YamlCanvas } from "./yaml";
 
-export var DefaultTemplate = "dac-default";
+export let DefaultTemplate = "dac-default";
 
 export interface Component {
   id: string;

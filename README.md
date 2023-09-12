@@ -25,13 +25,17 @@ You are free to add other elements as well, such as fonts and stylesheets to the
 
 The Javascript file included in the HTML should import the library and, after page load, instantiate all the components needed to be drawn. The next section will explain how to do that.
 
-To run the example, move there and run `npm exec diagascode` to generate an image, or `npm exec vite` to launch a Web server serving the diagram.
+To run the example, move there and run `npm exec vite` to launch a Web server serving the diagram.
 
 ### YAML
 
 This README focuses on describing the diagram as code. You can also use YAML (or plain Javascript objects) to describe it. It is your responsibility to use a loader capable of reading the raw YAML file and turn it into a Javascript object. Once it is done, you can call `Canvas.fromYaml(obj)` instead of describing your diagram.
 
 You can find an example of YAML file [here](./examples/diagram.yml)
+
+### Standalone command
+
+TBD.
 
 ## Canvas
 

@@ -28,6 +28,7 @@ func main() {
 	assets := flag.String("assets", "", "path to a directory containing diagram assets")
 	out := flag.String("out", "screenshot.png", "name of the output PNG file")
 	port := flag.Int("port", 12345, "port to listen to")
+	stayAlive := flag.Bool("stayup", false, "whether to keep the server up after generation")
 
 	flag.Parse()
 
@@ -89,6 +90,10 @@ func main() {
 	}
 
 	fmt.Printf("Diagram generated at `%s`.\n", *out)
+
+	if *stayAlive {
+		select {}
+	}
 }
 
 func screenshot(urlstr string, res *[]byte) chromedp.Tasks {
