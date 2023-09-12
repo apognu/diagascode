@@ -28,7 +28,7 @@ func main() {
 	assets := flag.String("assets", "", "path to a directory containing diagram assets")
 	out := flag.String("out", "screenshot.png", "name of the output PNG file")
 	port := flag.Int("port", 12345, "port to listen to")
-	stayAlive := flag.Bool("stayup", false, "whether to keep the server up after generation")
+	debug := flag.Bool("debug", false, "run a web server instead of generating an image")
 
 	flag.Parse()
 
@@ -45,7 +45,7 @@ func main() {
 	r := gin.New()
 	r.StaticFile("/overrides/diagram.js", *source)
 
-	r.GET("/overrides/index.html", func(c *gin.Context) {
+	r.GET("/", func(c *gin.Context) {
 		templ := template.Must(template.New("").ParseFS(frontend, "dist/index.html"))
 		r.SetHTMLTemplate(templ)
 
@@ -77,21 +77,22 @@ func main() {
 		r.Run(fmt.Sprintf(":%d", *port))
 	}()
 
-	ctx, cancel := chromedp.NewContext(context.Background())
-	defer cancel()
+	if !*debug {
+		ctx, cancel := chromedp.NewContext(context.Background())
+		defer cancel()
 
-	var buf []byte
+		var buf []byte
 
-	if err := chromedp.Run(ctx, screenshot("http://127.0.0.1:12345/overrides/index.html", &buf)); err != nil {
-		log.Fatal(err)
-	}
-	if err := os.WriteFile(*out, buf, 0o644); err != nil {
-		log.Fatal(err)
-	}
+		if err := chromedp.Run(ctx, screenshot(fmt.Sprintf("http://127.0.0.1:%d/", *port), &buf)); err != nil {
+			log.Fatal(err)
+		}
+		if err := os.WriteFile(*out, buf, 0o644); err != nil {
+			log.Fatal(err)
+		}
 
-	fmt.Printf("Diagram generated at `%s`.\n", *out)
-
-	if *stayAlive {
+		fmt.Printf("Diagram generated at `%s`.\n", *out)
+	} else {
+		fmt.Printf("Debug server running at http://127.0.0.1:%d/.\n", *port)
 		select {}
 	}
 }
