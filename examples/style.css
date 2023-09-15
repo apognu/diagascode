@@ -2,20 +2,39 @@ body {
   font-family: Roboto, sans-serif;
 }
 
+.jtk-overlay {
+  font-size: 0.7rem !important;
+  background: transparent !important;
+}
+
 .box {
   display: flex;
   align-items: center;
-  padding: 2px 14px;
   background: white;
-  border: 1px solid #2980b9;
+  border: 0.5px solid #2980b9;
   border-radius: 4px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
+.box .wrapper {
+  position: relative;
+}
+
+.box .right {
+  flex: 1;
+  padding: 4px 24px 4px 24px;
+}
+
 .box img {
+  position: absolute;
+  top: -20px;
+  left: -20px;
   width: 32px;
   height: 32px;
-  margin-right: 12px;
+  background: white;
+  padding: 2px;
+  border: 1px solid #2980b9;
+  border-radius: 32px;
 }
 
 .box p {
@@ -28,14 +47,20 @@ body {
 }
 
 .box .title {
-  font-size: 1rem;
-  font-weight: 400;
+  font-size: 0.9rem;
+  font-weight: 500;
   color: #232323;
 }
 
 .box .function {
   font-size: 0.8rem;
   font-variant: small-caps;
+}
+
+.box .title + .subtitle:not(:empty) {
+  margin-top: 3px;
+  padding-top: 3px;
+  border-top: 2px solid #2980b9;
 }
 
 .box .subtitle {
@@ -51,12 +76,19 @@ body {
 }
 
 .simple-icon .square {
+  display: grid;
+  align-content: center;
+  justify-items: center;
   aspect-ratio: 1 / 1;
-  padding: 12px;
+  padding: 6px;
   background: white;
   border: 1px solid #2980b9;
   border-radius: 48px;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+
+.simple-icon .wrapper {
+  position: relative;
 }
 
 .simple-icon img {
@@ -66,4 +98,13 @@ body {
 
 .simple-icon .title {
   margin: 0;
+  font-size: 0.8rem;
+  color: #232323;
+  position: absolute;
+  bottom: -1em;
+  padding: 1px 4px;
+  background: white;
+  border: 0.5px solid #2980b9;
+  border-radius: 4px;
+  white-space: nowrap;
 }

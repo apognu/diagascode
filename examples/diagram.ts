@@ -1,121 +1,134 @@
-import { Zone, Node, Canvas } from "@apognu/diagascode";
+import { Node, Canvas, Zone } from "@apognu/diagascode";
 
 window.onload = () => {
   const canvas = new Canvas({
-    title: "Hello, world!",
-    subtitle: "Lorem ipsum dolor sit amet",
+    title: "Simple diagram",
+    subtitle: "Asynchronous message posting",
+    defaultTemplate: "box",
     draggable: true,
-    columnGap: 92,
+    columnGap: 96,
+    rowGap: 96,
+    padding: 56,
+    baseFontSize: 16,
   });
 
-  const user = canvas.add(
+  const api = canvas.add(
     new Node(
-      { col: 1, row: 3 },
+      { col: 1, row: 1, spanRow: 2 },
       {
-        icon: "my_cloud.svg",
-        title: "User",
+        icon: "/assets/pod.svg",
+        function: "workload",
+        title: "API",
+        subtitle: "Message producer",
       },
-      [],
+    ),
+  );
+
+  const sa = canvas.add(
+    new Node(
+      { col: 2, row: 1 },
+      {
+        icon: "/assets/identity_and_access_management.svg",
+        function: "service account",
+        title: "Service account",
+      },
+      [[api, { connection: { dashed: true } }]],
       { template: "simple-icon" },
     ),
   );
 
-  const lb = canvas.add(
+  const queue = canvas.add(
     new Node(
-      { col: 1, row: 2 },
+      { col: 2, row: 2 },
       {
-        icon: "cloud_load_balancing.svg",
-        function: "cloud load balancer",
-        title: "Ingress",
-        subtitle: "api.example.com",
+        icon: "/assets/cloud_tasks.svg",
+        function: "cloud tasks",
+        title: "Message queue",
       },
       [
         [
-          user,
+          sa,
           {
-            connection: { color: "#558fa7" },
-            handles: { sourceColor: "#558fa7", destColor: "#558fa7" },
+            handles: { arrow: true, size: 2 },
+            connection: { label: "Cloud Tasks Enqueuer" },
           },
         ],
       ],
     ),
   );
 
-  const api = canvas.add(
+  const func = canvas.add(
     new Node(
-      { col: lb.col + 1, row: lb.row },
+      { col: 3, row: 2 },
       {
-        icon: "pod.svg",
-        function: "deployment",
-        title: "Main API",
-        subtitle: "3 instances",
+        icon: "/assets/cloud_functions.svg",
+        function: "cloud function",
+        title: "Dispatcher",
       },
-      [lb],
+      [[queue, { handles: { arrow: true } }]],
     ),
   );
 
-  const bucket = canvas.add(
-    new Node(
-      { col: lb.col + 1, row: lb.row - 1 },
-      {
-        icon: "cloud_storage.svg",
-        function: "bucket",
-        title: "Uploaded files",
-        subtitle: "my-bucket/",
-      },
-      [
-        [
-          lb,
-          { connection: { cornerRadius: 8, color: "#f38c8f", label: "HTTP" } },
-        ],
-      ],
+  canvas.add(
+    new Zone(
+      { col: 1, row: 1, colSpan: 3, rowSpan: 2 },
+      [api, sa, queue, func],
+      { title: "Europe", background: "#addeec" },
     ),
   );
 
-  const db = canvas.add(
+  const sqlSa = canvas.add(
     new Node(
-      { col: api.col + 1, row: api.row },
+      { col: 3, row: 3 },
       {
-        icon: "cloud_sql.svg",
+        icon: "/assets/identity_and_access_management.svg",
+        function: "service account",
+        title: "Service account",
+      },
+      [[func, { connection: { dashed: true } }]],
+      { template: "simple-icon" },
+    ),
+  );
+
+  const sql = canvas.add(
+    new Node(
+      { col: 3, row: 4 },
+      {
+        icon: "/assets/cloud_sql.svg",
         function: "cloud sql",
-        title: "Database",
-      },
-      [[api, { connection: { dashed: true }, handles: { arrow: true } }]],
-    ),
-  );
-
-  const cache = canvas.add(
-    new Node(
-      { col: api.col, row: api.row + 1 },
-      {
-        icon: "memorystore.svg",
-        function: "memory store",
-        title: "Cache",
+        title: "Repository",
       },
       [
         [
-          api,
+          sqlSa,
           {
-            connection: { dashed: true },
+            connection: { label: "CloudSQL Client" },
             handles: { arrow: true },
           },
         ],
       ],
+      { background: "#cbe5df" },
     ),
   );
 
-  canvas.add(
-    new Zone({ col: 1, colSpan: 1, row: 2, rowSpan: 1 }, [lb], {
-      title: "global",
-      background: "#dedede",
-    }),
-  );
-
-  canvas.add(
-    new Zone({ col: 2, colSpan: 2, row: 2, rowSpan: 2 }, [api, db, cache], {
-      title: "europe-west-1",
-      background: "#acded5",
-    }),
+  const website = canvas.add(
+    new Node(
+      { col: 1, row: 4 },
+      {
+        icon: "/assets/pod.svg",
+        function: "workload",
+        title: "Website",
+        subtitle: "End consumer",
+      },
+      [
+        [
+          sql,
+          {
+            handles: { arrow: true, direction: "peer" },
+          },
+        ],
+      ],
+    ),
   );
 
   canvas.draw();

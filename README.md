@@ -7,7 +7,7 @@
 It can be used to get diagrams such as this one:
 
 ![Example diagram generated with diagascode](contrib/example.png)
-![Another example](contrib/aws.png)
+![Another example](contrib/example2.png)
 
 ## Concepts
 
@@ -19,23 +19,21 @@ When a component is defined, other component can be referred from it, either to 
 
 ### Example
 
-You can look into the `examples` directory to see a sample implementation of the project. After having imported `diagascode` in your `package.json`, you need to create an `index.html` file containing at the very least one template (denoted with the `template` class) and an import of your Javascript file describing your diagram.
+You can download a pre-built binary from the release page, or build it yourself with:
 
-You are free to add other elements as well, such as fonts and stylesheets to theme your components.
+```shell
+$ yarn build
+$ go build .
+```
 
-The Javascript file included in the HTML should import the library and, after page load, instantiate all the components needed to be drawn. The next section will explain how to do that.
+Once you have the binary, you can execute it against a diagram definition to generate it. Some options can be added to the invocation:
 
-To run the example, move there and run `npm exec vite` to launch a Web server serving the diagram.
-
-### YAML
-
-This README focuses on describing the diagram as code. You can also use YAML (or plain Javascript objects) to describe it. It is your responsibility to use a loader capable of reading the raw YAML file and turn it into a Javascript object. Once it is done, you can call `Canvas.fromYaml(obj)` instead of describing your diagram.
-
-You can find an example of YAML file [here](./examples/diagram.yml)
-
-### Standalone command
-
-TBD.
+ * `-diagram file.js`: the path to the diagram definition
+ * `-css file.css`: path to a CSS file to apply to your diagram
+ * `-templates file.html`: path to an HTML file containing node templates
+ * `-assets directory`: path to directory containing static assets used in your diagram and addressable under `/assets/`
+ * `-out file.png`: path to the output image file
+ * `-debug`: run a webserver serving the diagram instead of generating an image
 
 ## Canvas
 
